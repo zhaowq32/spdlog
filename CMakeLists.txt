@@ -33,9 +33,9 @@ elseif(NOT CMAKE_CXX_STANDARD)
     set(CMAKE_CXX_STANDARD_REQUIRED ON)
 endif()
 
-# make sure __cplusplus is defined when using msvc and enable parallel build
+# under msvc make sure __cplusplus, parallel build and utf-8 enabled
 if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-    string(APPEND CMAKE_CXX_FLAGS " /Zc:__cplusplus /MP")
+    string(APPEND CMAKE_CXX_FLAGS " /Zc:__cplusplus /MP /utf-8")
 endif()
 
 set(CMAKE_CXX_EXTENSIONS OFF)
