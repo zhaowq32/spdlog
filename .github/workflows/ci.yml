@@ -77,3 +77,19 @@ jobs:
           make -j2
           ctest -j2 --output-on-failure
 
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install CMake
+        run: choco install cmake --installargs '"ADD_CMAKE_TO_PATH=System"' --no-progress
+
+      - name: Configure CMake
+        run: cmake -S . -B build
+
+      - name: Build
+        run: cmake --build build --config Release
+
