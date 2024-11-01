@@ -3,9 +3,6 @@ name: ci
 on: [push, pull_request]
 
 jobs:
-  # ---------------------------------------------------------------------------------
-  # Linux
-  # ---------------------------------------------------------------------------------
   build_linux:
     runs-on: ubuntu-latest
     defaults:
@@ -59,9 +56,6 @@ jobs:
           make -j2
           ctest -j2 --output-on-failure
 
-  # ---------------------------------------------------------------------------------
-  # OSX
-  # ---------------------------------------------------------------------------------
   build_osx:
     runs-on: macOS-latest
     name: "OS X Clang (C++11, Release)"
@@ -82,18 +76,10 @@ jobs:
             -DSPDLOG_SANITIZE_ADDRESS=OFF
           make -j2
           ctest -j2 --output-on-failure
-# ---------------------------------------------------------------------------------
-# Windows
-# ---------------------------------------------------------------------------------
-  build_windows:
+
+  build_windows_msvc_2022:
     runs-on: windows-latest
-    strategy:
-      matrix:
-        msvc_version:
-          - { name: "Visual Studio 17 2022", generator: "Visual Studio 17 2022" }
-
-    name: "Windows ${{ matrix.msvc_version.name }} (C++11, Release)"
-
+    name: "Windows MSVC 2022 (C++11, Release)"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -106,9 +92,9 @@ jobs:
 
       - name: Configure CMake
         run: |
-          cmake -S . -B build -G "${{ matrix.msvc_version.generator }}" -A x64\ 
+          cmake -S . -B build -G "Visual Studio 17 2022" -A x64 \
             -DCMAKE_BUILD_TYPE=Release 
-            -DCMAKE_CXX_STANDARD=11
+            -DCMAKE_CXX_STANDARD=11 
             -DSPDLOG_BUILD_EXAMPLE=ON 
             -DSPDLOG_BUILD_EXAMPLE_HO=ON 
             -DSPDLOG_BUILD_WARNINGS=ON 
@@ -122,3 +108,4 @@ jobs:
 
       - name: Run Tests
         run: ctest --test-dir build -C Release --output-on-failure --verbose
+
