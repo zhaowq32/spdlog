@@ -90,8 +90,6 @@ jobs:
     strategy:
       matrix:
         msvc_version:
-          - { name: "Visual Studio 15 2017", generator: "Visual Studio 15 2017" }
-          - { name: "Visual Studio 16 2019", generator: "Visual Studio 16 2019" }
           - { name: "Visual Studio 17 2022", generator: "Visual Studio 17 2022" }
 
     name: "Windows ${{ matrix.msvc_version.name }} (C++11, Release)"
@@ -108,7 +106,7 @@ jobs:
 
       - name: Configure CMake
         run: |
-          cmake -S . -B build -G "${{ matrix.msvc_version.generator }}" -A x64 
+          cmake -S . -B build -G "${{ matrix.msvc_version.generator }}" -A x64\ 
             -DCMAKE_BUILD_TYPE=Release 
             -DCMAKE_CXX_STANDARD=11
             -DSPDLOG_BUILD_EXAMPLE=ON 
