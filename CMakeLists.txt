@@ -54,6 +54,12 @@ endif()
 
 option(SPDLOG_BUILD_ALL "Build all artifacts" OFF)
 
+option(SPDLOG_HIDDEN_SYMBOLS "Hidden symbols" OFF)
+
+if(SPDLOG_HIDDEN_SYMBOLS)
+    set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+endif()
+
 # build shared option
 option(SPDLOG_BUILD_SHARED "Build shared library" OFF)
 
